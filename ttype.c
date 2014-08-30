@@ -4,6 +4,9 @@
 #include <string.h>
 #include <time.h>
 
+#define CTRL(x) (x&037)
+#define CEOF    CTRL('d')
+
 static const int NUMWORDS = 10;
 static const int NUMREPS  = 3;
 
@@ -72,6 +75,12 @@ char *nth(int n, node *list) {
   return NULL;
 }
 
+int exit_cleanly() {
+  echo();
+  keypad(stdscr, 0);
+  endwin();
+  exit(EXIT_SUCCESS);
+}
 /* return a string that is produced by concatenating 'words' together with
  * char 'c' interposed between them
  */
@@ -159,7 +168,10 @@ int main(int argc, char **argv) {
   for (curr_reps = 0; curr_reps < NUMREPS; curr_reps++) {
     while (curr_char < msglen) {
       ch = getch();
-      if (ch == msg[curr_char]) {
+      if (ch == CTRL('d')) {
+        printw("Exiting\n");
+        exit_cleanly();
+      } else if (ch == msg[curr_char]) {
         addch(ch);
         curr_char++;
       }
@@ -192,6 +204,5 @@ int main(int argc, char **argv) {
 
   /* cleanup */
   free(msg);
-  endwin();
-  return 0;
+  exit_cleanly();
 }
