@@ -8,7 +8,7 @@
 #define CEOF    CTRL('d')
 
 static const int NUMWORDS = 10;
-static const int NUMREPS  = 1;
+static const int NUMREPS  = 3;
 
 struct node_ {
   char *item;
@@ -118,7 +118,7 @@ int main(int argc, char **argv) {
   /* collect candidate words from the dictionary */
   while ((numread = getline(&line, &n, f)) > 0) {
     line[numread-1] = '\0';
-    if (allfrom("lraistneo", line) && numread > 3) {
+    if (allfrom("lraistneomd", line) && numread > 3) {
       count++;
       cons(line, &list);
     }
