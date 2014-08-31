@@ -106,7 +106,7 @@ char *intercalate(char c, int total_len, int numwords, char **words) {
 int main(int argc, char **argv) {
   FILE *f;
   if (argc > 1)
-    f = fopen(*++argv, "r");
+    f = fopen(argv[1], "r");
   else
     f = fopen("/usr/share/dict/words", "r");
   size_t n = 0;
@@ -116,9 +116,15 @@ int main(int argc, char **argv) {
   int count = 0;
 
   /* collect candidate words from the dictionary */
+  char *keys;
+  if (argc > 2)
+    keys = argv[2];
+  else
+    keys = "arestniofk";
+
   while ((numread = getline(&line, &n, f)) > 0) {
     line[numread-1] = '\0';
-    if (allfrom("arestniofk", line) && numread > 3) {
+    if (allfrom(keys, line) && numread > 3) {
       count++;
       cons(line, &list);
     }
