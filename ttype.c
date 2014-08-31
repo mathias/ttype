@@ -174,7 +174,7 @@ int main(int argc, char **argv) {
   for (curr_reps = 0; curr_reps < NUMREPS; curr_reps++) {
     while (curr_char < msglen) {
       ch = getch();
-      if (ch == CTRL('d')) {
+      if (ch == CTRL('d') || ch == CTRL('c')) {
         printw("Exiting\n");
         exit_cleanly();
       } else if (ch == msg[curr_char]) {
